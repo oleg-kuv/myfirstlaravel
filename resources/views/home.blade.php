@@ -3,5 +3,5 @@
 @section('title')Главная страница@endsection
 
 @section('main_content')
-   <p>home</p>
+   <p>Главная</p>
 @endsection

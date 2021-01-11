@@ -16,27 +16,44 @@ class CreateTasksTable extends Migration
        if (!Schema::hasTable('statuses')) {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('title');
-            $table->string('description');
+            //$table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->string('name');
+            $table->text('description')->nullable();
         });
+       $data = [
+            ['name' => 'new'],
+            ['name' => 'in_work'],
+            ['name' => 'completed'],
+            ['name' => 'canceled'],
+            ['name' => 'postponed']
+         ];
+      //Model::insert($data);
+       \DB::table('statuses')->insert($data);
        }
        if (!Schema::hasTable('tasks')) {
         Schema::create('tasks', function (Blueprint $table) {
+            $statusNew = DB::table('statuses')
+               ->select('id')
+               ->where('name', 'new')
+               ->first()->id;
             $table->id();
-            $table->timestamps();
-            $table->string('title');
-            $table->string('description');
-            $table->integer('parent_task_id')->unsigned();
-            $table->dateTime('finish_before');
-            $table->enum('run_status', ['running', 'stopped'])->default('stopped');
-            $table->dateTime('run_status_modified_at');
-            $table->integer('status')->unsigned();
-            $table->foreign('status')->references('id')->on('statuses');
-            $table->dateTime('status_modified_at');
-            $table->dateTime('status_expires_at');
-            $table->integer('next_status')->unsigned();
-            $table->foreign('next_status')->references('id')->on('statuses');
+            //$table->timestamps();
+            $table->timestamp ('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp ('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->string    ('title');
+            $table->text      ('description')->nullable();
+            $table->bigInteger('parent_task_id')->unsigned()->nullable();
+            $table->timestamp ('finish_before')->nullable();
+            $table->enum      ('run_status', ['running', 'stopped'])->default('stopped')->nullable();
+            $table->timestamp ('run_status_modified_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->bigInteger('status')->unsigned()->default($statusNew);
+            $table->foreign   ('status')->references('id')->on('statuses');
+            $table->timestamp ('status_modified_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp ('status_expires_at')->nullable();
+            $table->bigInteger('next_status')->unsigned()->nullable();
+            $table->foreign   ('next_status')->references('id')->on('statuses');
         });
         Schema::table('tasks', function($table){
             $table->foreign('parent_task_id')->references('id')->on('tasks');

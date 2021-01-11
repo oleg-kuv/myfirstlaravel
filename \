@@ -1,0 +1,28 @@
+html, body {
+   height: 100%;
+}
+.page {
+   min-height: 100vh;
+}
+.sidebar {
+   background: #ddd;
+}
+
+.taskTitle>div {
+   max-width: 400px;
+   overflow: hidden;
+   white-space: nowrap;
+}
+
+.depth {color: #737373;}
+.depth--1 {}
+.depth--2 {}
+.depth--3 {}
+.depth--4 {}
+
+.depth--0 .taskTitle {}
+.depth--1 .taskTitle > div {padding-left: 20px;}
+.depth--2 .taskTitle > div {padding-left: 30px;}
+.depth--3 .taskTitle > div {padding-left: 40px;}
+.depth--4 .taskTitle > div {padding-left: 50px;}
+.depth--5 .taskTitle > div {padding-left: 60px;}

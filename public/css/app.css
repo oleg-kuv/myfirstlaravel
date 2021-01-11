@@ -1,0 +1,31 @@
+* a { color: #2b2b2b }
+* a:hover { color: #2b2b2b }
+html, body {
+   height: 100%;
+}
+a.my-link{ text-decoration: none; }
+a.my-link:hover { text-decoration: underline; }
+.page {
+   min-height: 100vh;
+}
+.sidebar {
+   background: #ddd;
+}
+.taskTitle {overflow: hidden;}
+.taskTitle>a {
+   overflow: hidden;
+   white-space: nowrap;
+}
+.top-task { background: #eceaea; }
+.depth, .depth a {color: #737373;}
+.depth--1 {}
+.depth--2 {}
+.depth--3 {}
+.depth--4 {}
+
+.depth--0 .taskTitle > a {}
+.depth--1 .taskTitle > a {padding-left: 20px;}
+.depth--2 .taskTitle > a {padding-left: 30px;}
+.depth--3 .taskTitle > a {padding-left: 40px;}
+.depth--4 .taskTitle > a {padding-left: 50px;}
+.depth--5 .taskTitle > a {padding-left: 60px;}
